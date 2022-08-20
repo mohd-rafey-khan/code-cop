@@ -22,24 +22,21 @@ module.exports.register = async (req,res)=>{
     }
 }
 
-module.exports.login = async(req,res)=>{
+module.exports.login = async (req,res)=>{
     const exists_user = await User.findOne({email: req.body.email});
     if(!exists_user) return res.status(400).send("User not found");
     try{
-    if(exists_user){
-        const valid = await bcrypt.compare(req.body.password,exists_user.password);
-        if(valid){
-            const token = jwt.sign({_id: exists_user._id}, process.env.TOKEN_SECRET);
-            res.header('auth-token', token).send(token);
-        } 
-        else return res.status(400).send("Password not matchd");
-    }
-    }
-    catch(err){
+        if(exists_user){
+            const valid = await bcrypt.compare(req.body.password,exists_user.password);
+            if(valid){
+                const token = jwt.sign({_id: exists_user._id}, process.env.TOKEN_SECRET);
+                res.header('auth-token', token).send(token);
+            } 
+            else return res.status(400).send("Password not matchd");
+        }
+    }catch(err){
         res.status(404).send(err);
     }
-    
-
 }
 
 

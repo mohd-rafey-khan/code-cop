@@ -1,32 +1,27 @@
 const express  = require('express');
 app = express();
-require('dotenv').config();
 const bodyParser = require('body-parser');
-const User = require('./models/User');
-const mongoose = require('./config/mongoose');
-
-// ---------------------  Configs -----------------
-
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-
-
-
 
 
 /**
- * all routes
+ * @inheritdoc
+ * Configs
  */
-// using auth register login
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+require('dotenv').config();
+require('./config/mongoose');
 
+/**
+ * @inheritdoc
+ * Handle all routes
+ */
+app.use('/api',require('./routes'));
 
-app.use('/',require('./routes'));
-
-
-
-
-
-
+/**
+ * @inheritdoc
+ * Server started
+ */
 app.listen(process.env.PORT,()=>{
     console.log("server started!");
 })
