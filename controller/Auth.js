@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
-router.post('/register',async (req,res)=>{
+module.exports.register = async (req,res)=>{
     const exists = await User.findOne({email: req.body.email});
     if(exists) return res.status(400).send('Email already exists');
 
@@ -21,6 +21,6 @@ router.post('/register',async (req,res)=>{
     } catch(err){
         res.send(400).send(err);
     }
-});
+}
 
-module.exports = router;
+
