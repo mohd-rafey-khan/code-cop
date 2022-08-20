@@ -2,10 +2,8 @@ const router = require('express').Router();
 
 /**
  * @inheritdoc
- * Users authentication
  */
-const usersAuth = require('./user');
-router.use('/users',usersAuth);
 
+router.use('/users',require('./userRoutes'));
 
 module.exports = router;
